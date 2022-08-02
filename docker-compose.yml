@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+
+  mysql_server:
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_DATABASE=fullstack_shop
+      - MYSQL_USER=elo
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - '3306:3306'
+    networks:
+      - default
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    volumes:
+      - .:/app
+      - 'app/node_modules'
+    depends_on:
+      - mysql_server
