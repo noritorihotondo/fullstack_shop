@@ -1,22 +1,27 @@
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import {User} from "../entities/User";
+import {APIError} from "../lib/utils/api-error";
+import {APIErrorCode, HttpStatusCode} from "../types/HTTP/http.model";
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const {firstname, lastname, email} = req.body;
+        console.log(req.body)
+        const {firstname, lastname, email, password} = req.body;
 
         const user = new User();
         user.firstname = firstname;
         user.lastname = lastname;
         user.email = email;
+        user.password = password;
 
         await user.save()
+        if(!user) {
+            throw new APIError("Cant find user", HttpStatusCode.OK, false, APIErrorCode.CantFindUser, "CreateUser")
+        }
 
         return res.json(user)
     } catch (error) {
-        if(error instanceof Error) {
-            return res.status(500).json({message: error.message})
-        }
+        next(error)
     }
 }
 

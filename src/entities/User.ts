@@ -7,8 +7,10 @@ import {
     BaseEntity
 } from 'typeorm'
 
+import {UserEntity} from "../types";
+
 @Entity()
-export class User extends BaseEntity{
+export class User extends BaseEntity implements UserEntity{
 
     @PrimaryGeneratedColumn('uuid')
     id: string
@@ -20,6 +22,11 @@ export class User extends BaseEntity{
         unique: true
     })
     email: string
+
+    @Column({
+        nullable: true
+    })
+    password: string
 
     @Column()
     lastname: string
@@ -35,3 +42,4 @@ export class User extends BaseEntity{
     @UpdateDateColumn()
     updatedAt: Date;
 }
+console.log(__dirname)

@@ -6,10 +6,10 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      - MYSQL_DATABASE=fullstack_shop
-      - MYSQL_USER=elo
-      - MYSQL_PASSWORD=secret
-      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=process.env.MYSQL_DATABASE
+      - MYSQL_USER=process.env.MYSQL_USER
+      - MYSQL_PASSWORD=process.env.MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD=process.env.MYSQL_ROOT_PASSWORD
     ports:
       - '3306:3306'
     networks:
@@ -23,6 +23,5 @@ services:
       - '8080:8080'
     volumes:
       - .:/app
-      - 'app/node_modules'
     depends_on:
       - mysql_server
