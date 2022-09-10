@@ -3,13 +3,11 @@ version: '3.8'
 services:
 
   mysql_server:
-    image: mysql:latest
+    image: mariadb:latest
     restart: always
     environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true
       - MYSQL_DATABASE=fullstack_shop
-      - MYSQL_USER=elo
-      - MYSQL_PASSWORD=secret
-      - MYSQL_ROOT_PASSWORD=secret
     ports:
       - '3306:3306'
     networks:
@@ -23,6 +21,5 @@ services:
       - '8080:8080'
     volumes:
       - .:/app
-      - 'app/node_modules'
     depends_on:
       - mysql_server
