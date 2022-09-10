@@ -1,20 +1,18 @@
-import "reflect-metadata";
-import app from './app'
-import {AppDataSource} from './db'
+import 'reflect-metadata';
+import app from './app';
+import { AppDataSource } from './database/typeorm';
 
 const PORT = process.env.PORT || 8080;
 
-async function main() {
-    try {
-        await AppDataSource.initialize();
-        console.log('Database connected')
-        app.listen(PORT,  () => {
-            console.log(`Server is listening on port ${PORT}`)
-        })
-    } catch (error) {
-        console.log(error)
-    }
-}
+const main = async () => {
+  try {
+    await AppDataSource.initialize();
+    await app.listen(PORT, () => {
+      console.log(`Server is listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-main().then().catch((err) => console.error(err));
-
+main();
