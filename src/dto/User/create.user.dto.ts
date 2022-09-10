@@ -1,45 +1,25 @@
 import Joi from 'joi';
 
-const generatePassword = () => {
-    return new RegExp('^[a-zA-Z0-9]{3,30}$')
-};
+const passwordRegExp = () => new RegExp('^[a-zA-Z0-9]{3,30}$');
+
+const firstAndLastnameValidation = Joi.string().alphanum().min(3).max(30).required();
 
 export const CreateUserSchema = Joi.object({
-    firstname: Joi.string()
-        .alphanum()
-        .min(3)
-        .max(30)
-        .required(),
+  firstname: firstAndLastnameValidation,
 
-    lastname: Joi.string()
-        .alphanum()
-        .min(3)
-        .max(30)
-        .required(),
+  lastname: firstAndLastnameValidation,
 
-    password: Joi.string()
-        .pattern(generatePassword())
-        .required(),
+  password: Joi.string().pattern(passwordRegExp()).required(),
 
-    email: Joi.string()
-        .email()
-        .required(),
+  email: Joi.string().email().required(),
 });
 
 export const UpdateUserSchema = Joi.object({
-    firstname: Joi.string()
-        .alphanum()
-        .min(3)
-        .max(30),
+  firstname: firstAndLastnameValidation,
 
-    lastname: Joi.string()
-        .alphanum()
-        .min(3)
-        .max(30),
+  lastname: firstAndLastnameValidation,
 
-    password: Joi.string()
-        .pattern(generatePassword()),
+  password: Joi.string().pattern(passwordRegExp()),
 
-    email: Joi.string()
-        .email()
-})
+  email: Joi.string().email(),
+});

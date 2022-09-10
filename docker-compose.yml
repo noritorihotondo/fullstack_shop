@@ -3,13 +3,11 @@ version: '3.8'
 services:
 
   mysql_server:
-    image: mysql:latest
+    image: mariadb:latest
     restart: always
     environment:
-      - MYSQL_DATABASE=process.env.MYSQL_DATABASE
-      - MYSQL_USER=process.env.MYSQL_USER
-      - MYSQL_PASSWORD=process.env.MYSQL_PASSWORD
-      - MYSQL_ROOT_PASSWORD=process.env.MYSQL_ROOT_PASSWORD
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=fullstack_shop
     ports:
       - '3306:3306'
     networks:

@@ -3,17 +3,17 @@ import bunyan from 'bunyan';
 import { BaseError } from './base-error';
 
 export class ErrorHandler {
-    logger: bunyan;
+  logger: bunyan;
 
-    constructor(logger: bunyan) {
-        this.logger = logger;
-    }
+  constructor(logger: bunyan) {
+    this.logger = logger;
+  }
 
-    public async handleError(err: Error): Promise<void> {
-        logger.error(err);
-    }
+  public async handleError(err: Error): Promise<void> {
+    logger.error(err);
+  }
 
-    public isTrustedAndBaseError(error: Error) {
-        return error instanceof BaseError && error.isOperational;
-    }
+  public isTrustedAndBaseError(error: Error) {
+    return error instanceof BaseError && error.isOperational;
+  }
 }
