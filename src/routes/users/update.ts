@@ -1,8 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
-import { APIRoute, HTTPMethod, ApiErrorCode } from '../../types';
+import { APIRoute, HTTPMethod, ApiErrorCode, UpdateUserResponse } from '../../types';
 import { APIError } from '../../lib/utils/api-error';
 import { findUserById, updateUser } from '../../services';
-import { UpdateUserResponse } from '../../types';
 import { isUuid } from '../../lib/utils/isUuid';
 
 export default {
