@@ -1,17 +1,24 @@
-import { APIRoute } from '../../types/API';
-import { HTTPMethod } from '../../types/HTTP/http.status';
-import { Request, Response, NextFunction } from 'express';
-
-import { APIError } from '../../lib/utils/api-error';
-import { ApiErrorCode } from '../../types/HTTP/http.model';
-import { findUserById } from '../../services';
 import { StatusCodes } from 'http-status-codes';
+import { APIRoute, HTTPMethod, ApiErrorCode } from '../../types';
+import { APIError } from '../../lib/utils/api-error';
+import { findUserById } from '../../services';
+import { isUuid } from '../../lib/utils/isUuid';
 
 export default {
   method: HTTPMethod.GET,
   url: '/user/id/:id',
-  controller: async (req: Request, res: Response, next: NextFunction) => {
+  controller: async (req, res, next) => {
     const { id } = req.params;
+
+    if (!isUuid(id)) {
+      throw new APIError(
+        'The uuid is not compatible with id',
+        StatusCodes.NOT_FOUND,
+        true,
+        ApiErrorCode.CantFindUser,
+        'GetUserById',
+      );
+    }
 
     const user = await findUserById(id);
 
