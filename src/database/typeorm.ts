@@ -1,12 +1,13 @@
 import { DataSource } from 'typeorm';
+import Config from '../lib/utils/config';
 
 export const AppDataSource = new DataSource({
   type: 'mariadb',
-  host: process.env.HOST,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  port: 3306,
-  database: process.env.DB_DATABASE,
+  host: Config.DB_HOST,
+  username: Config.DB_USER,
+  password: Config.DB_PASSWORD,
+  port: Config.DB_PORT,
+  database: Config.DB_DATABASE,
   entities: ['src/entities/**.ts'],
   logging: true,
   synchronize: true,

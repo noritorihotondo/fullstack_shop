@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 import app from './app';
 import { AppDataSource } from './database/typeorm';
+import Config from './lib/utils/config';
 
-const PORT = process.env.PORT || 8080;
+const PORT = Config.PORT || 8080;
 
 const main = async () => {
   try {
