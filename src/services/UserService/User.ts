@@ -1,26 +1,15 @@
+import { StatusCodes } from 'http-status-codes';
 import { User } from '../../entities/User';
 import { APIError } from '../../lib/utils/api-error';
-import { ApiErrorCode } from '../../types/HTTP/http.model';
-import {
-  CreateUserRequest,
-  CreateUserResponse,
-  UpdateUserRequest,
-  UpdateUserResponse,
-  UserEntity,
-} from '../../types';
-import { StatusCodes } from 'http-status-codes';
+import { CreateUserRequest, CreateUserResponse, UpdateUserResponse, UserStatus, ApiErrorCode } from '../../types';
 
-export const createUser = async ({
-  firstname,
-  lastname,
-  email,
-  password,
-}: CreateUserRequest): Promise<CreateUserResponse> => {
-  const user = new User();
-  user.firstname = firstname;
-  user.lastname = lastname;
-  user.email = email;
-  user.password = password;
+export const createUser = async (body: CreateUserRequest): Promise<CreateUserResponse> => {
+  let user = new User();
+  user.firstname = body.firstname;
+  user.lastname = body.lastname;
+  user.email = body.email;
+  user.password = body.password;
+  user.status = UserStatus.Pending;
 
   await user.save();
 
@@ -34,14 +23,9 @@ export const createUser = async ({
     );
   }
 
-  return {
-    firstname: user.firstname,
-    lastname: user.lastname,
-    email: user.email,
-    createdAt: user.createdAt,
-    id: user.id,
-    updatedAt: user.updatedAt,
-  };
+  const { password, ...rest } = user;
+
+  return rest;
 };
 
 export const findUserByEmail = async (email: string) => {
@@ -56,33 +40,19 @@ export const findUserById = async (id: string) => {
   return user;
 };
 
-export const deleteUser = async (id: string) => {
-  const user = await User.delete({ id });
+export const markAsDeleted = async (id: string) => {
+  const user = await User.update({ id }, { status: UserStatus.Deleted, updatedAt: new Date() });
 
   return user;
 };
 
-const getSafeUserValues = ({
-  firstname,
-  lastname,
-  id,
-  email,
-  updatedAt,
-  createdAt,
-}: UserEntity) => ({
-  firstname,
-  lastname,
-  id,
-  email,
-  updatedAt,
-  createdAt,
-});
-
 export const updateUser = async (
   id: string,
-  body: UpdateUserRequest,
+  firstname: string,
+  lastname: string,
+  email: string,
 ): Promise<UpdateUserResponse> => {
-  await User.update({ id }, { ...body, updatedAt: new Date() });
+  await User.update({ id }, { firstname, lastname, email, updatedAt: new Date() });
 
   const user = await findUserById(id);
 
@@ -96,5 +66,5 @@ export const updateUser = async (
     );
   }
 
-  return getSafeUserValues(user);
+  return user;
 };
