@@ -1,17 +1,27 @@
 import { StatusCodes } from 'http-status-codes';
-import { APIRoute } from '../../types/API';
-import { HTTPMethod } from '../../types/HTTP/http.status';
+import { APIRoute, HTTPMethod, ApiErrorCode } from '../../types';
 import { APIError } from '../../lib/utils/api-error';
-import { ApiErrorCode } from '../../types/HTTP/http.model';
 import { findUserById, updateUser } from '../../services';
 import { UpdateUserResponse } from '../../types';
+import { isUuid } from '../../lib/utils/isUuid';
 
 export default {
-  method: HTTPMethod.PATCH,
+  method: HTTPMethod.PUT,
   url: '/user/:id',
   controller: async (req, res, next): Promise<UpdateUserResponse> => {
     const { firstname, lastname, email } = req.body;
     const { id } = req.params;
+
+    if (!isUuid(id)) {
+      throw new APIError(
+        'The uuid is not compatible with id',
+        StatusCodes.NOT_FOUND,
+        true,
+        ApiErrorCode.CantFindUser,
+        'UpdateUser',
+      );
+    }
+
     const user = await findUserById(id);
 
     if (!user) {
@@ -24,7 +34,7 @@ export default {
       );
     }
 
-    const updatedUser = await updateUser(id, { firstname, lastname, email });
+    const updatedUser = await updateUser(id, firstname, lastname, email);
 
     return updatedUser;
   },
