@@ -1,28 +1,37 @@
-import { APIRoute } from '../../types/API';
-import { HTTPMethod } from '../../types/HTTP/http.status';
-import { Request, Response, NextFunction } from 'express';
-
-import { APIError } from '../../lib/utils/api-error';
-import { ApiErrorCode } from '../../types/HTTP/http.model';
-import { deleteUser } from '../../services';
 import { StatusCodes } from 'http-status-codes';
+import { APIError } from '../../lib/utils/api-error';
+import { ApiErrorCode, APIRoute, HTTPMethod } from '../../types';
+import { markAsDeleted } from '../../services';
+import { isUuid } from '../../lib/utils/isUuid';
 
 export default {
   method: HTTPMethod.DELETE,
   url: '/user/:id',
-  controller: async (req: Request, res: Response, next: NextFunction) => {
+  controller: async (req, res, next) => {
     const { id } = req.params;
 
-    const user = await deleteUser(id);
-
-    if (user.affected === 0) {
+    if (!isUuid(id)) {
       throw new APIError(
-        "Can't find the user",
+        'The uuid is not compatible with id',
         StatusCodes.NOT_FOUND,
         true,
         ApiErrorCode.CantFindUser,
-        'DeleteUser',
+        'GetUserById',
       );
     }
+
+    const markedUser = await markAsDeleted(id);
+
+    if (!markedUser) {
+      throw new APIError(
+        "Can't mark the user",
+        StatusCodes.NOT_FOUND,
+        true,
+        ApiErrorCode.CantFindUser,
+        'GetUserById',
+      );
+    }
+
+    return markedUser;
   },
 } as APIRoute;
