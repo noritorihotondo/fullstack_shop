@@ -7,7 +7,7 @@ import {
   BaseEntity,
 } from 'typeorm';
 
-import { UserEntity } from '../types';
+import { UserEntity, UserStatus } from '../types';
 
 @Entity()
 export class User extends BaseEntity implements UserEntity {
@@ -19,7 +19,7 @@ export class User extends BaseEntity implements UserEntity {
 
   @Column({
     unique: true,
-    length: 20,
+    length: 255,
   })
   email: string;
 
@@ -33,9 +33,11 @@ export class User extends BaseEntity implements UserEntity {
   lastname: string;
 
   @Column({
-    default: true,
+    default: UserStatus.Pending,
+    type: 'enum',
+    enum: UserStatus,
   })
-  active: boolean;
+  status: UserStatus;
 
   @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
