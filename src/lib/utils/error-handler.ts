@@ -1,5 +1,5 @@
-import { logger } from './logger';
 import bunyan from 'bunyan';
+import { logger } from './logger';
 import { BaseError } from './base-error';
 
 export class ErrorHandler {

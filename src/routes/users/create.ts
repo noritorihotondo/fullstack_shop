@@ -1,11 +1,8 @@
-import { APIRoute } from '../../types/API';
-import { HTTPMethod } from '../../types/HTTP/http.status';
 import { StatusCodes } from 'http-status-codes';
 import { APIError } from '../../lib/utils/api-error';
-import { ApiErrorCode } from '../../types/HTTP/http.model';
 import { CreateUserSchema } from '../../dto/User/create.user.dto';
 import { createUser, findUserByEmail } from '../../services';
-import { CreateUserResponse } from '../../types';
+import { CreateUserResponse, HTTPMethod, ApiErrorCode, APIRoute } from '../../types';
 
 export default {
   method: HTTPMethod.POST,

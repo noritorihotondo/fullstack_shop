@@ -1,5 +1,5 @@
-import { ApiErrorCode } from '../../types/HTTP/http.model';
 import { StatusCodes } from 'http-status-codes';
+import { ApiErrorCode } from '../../types';
 
 export class BaseError extends Error {
   public readonly log: string;

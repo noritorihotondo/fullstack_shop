@@ -1,4 +1,4 @@
-import { HTTPCode } from '../../types/HTTP/http.status';
+import { HTTPCode } from '../../types';
 
 export default class APIError extends Error {
     public code: number;

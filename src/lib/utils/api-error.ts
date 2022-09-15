@@ -1,6 +1,7 @@
-import { ApiErrorCode } from '../../types/HTTP/http.model';
-import { BaseError } from './base-error';
 import { StatusCodes } from 'http-status-codes';
+import { ApiErrorCode } from '../../types';
+import { BaseError } from './base-error';
+
 export class APIError extends BaseError {
   constructor(
     message: string,
