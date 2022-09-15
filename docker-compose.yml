@@ -5,9 +5,11 @@ services:
   mysql_server:
     image: mariadb:latest
     restart: always
+    env_file:
+      - .env
     environment:
       - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true
-      - MYSQL_DATABASE=fullstack_shop
+      - MYSQL_DATABASE=${DB_DATABASE}
     ports:
       - '3306:3306'
     networks:
