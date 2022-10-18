@@ -1,5 +1,5 @@
 import express from 'express';
-import preMiddlewares from './middlewares/pre/index';
+import preMiddlewares from './middlewares/pre';
 import { ErrorHandler } from './lib/utils/error-handler';
 import { logger } from './lib/utils/logger';
 import routes from './routes';

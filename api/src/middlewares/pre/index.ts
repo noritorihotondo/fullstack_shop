@@ -1,4 +1,4 @@
-import CrossOriginHeadersMiddleware from '../pre/cors/index';
+import CrossOriginHeadersMiddleware from './cors';
 import RequestDataJsonParserMiddleware from './bodyParser';
 
 export default [

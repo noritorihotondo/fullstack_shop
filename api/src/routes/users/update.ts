@@ -3,12 +3,13 @@ import { APIRoute, HTTPMethod, ApiErrorCode, UpdateUserResponse } from '../../ty
 import { APIError } from '../../lib/utils/api-error';
 import { findUserById, updateUser } from '../../services';
 import { isUuid } from '../../lib/utils/isUuid';
+import {responseUserData} from "../../lib/utils/response-user-data";
 
 export default {
   method: HTTPMethod.PUT,
   url: '/user/:id',
   controller: async (req, res, next): Promise<UpdateUserResponse> => {
-    const { firstname, lastname, email } = req.body;
+    const { firstname, lastname, email, createdAt, updatedAt } = req.body;
     const { id } = req.params;
 
     if (!isUuid(id)) {
@@ -32,9 +33,8 @@ export default {
         'UpdateUser',
       );
     }
-
-    const updatedUser = await updateUser(id, firstname, lastname, email);
-
+    const updatedUser = await updateUser(id,firstname,lastname,email,updatedAt,createdAt);
+    // const updatedUser = await updateUser(id, firstname, lastname, email,createdAt,updatedAt);
     return updatedUser;
   },
 } as APIRoute;

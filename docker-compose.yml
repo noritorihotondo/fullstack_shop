@@ -5,23 +5,27 @@ services:
   mysql_server:
     image: mariadb:latest
     restart: always
+    container_name: dbshop
     env_file:
-      - .env
+      - api/.env
     environment:
       - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true
-      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_DATABASE=fullstack_shop
     ports:
       - '3306:3306'
     networks:
-      - default
+      - mynet
 
   app:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./api
     ports:
       - '8080:8080'
-    volumes:
-      - .:/app
+    networks:
+      - mynet
     depends_on:
       - mysql_server
+
+networks:
+  mynet:
+    driver: bridge

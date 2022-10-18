@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { User } from '../../entities/User';
 import { APIError } from '../../lib/utils/api-error';
 import { CreateUserRequest, CreateUserResponse, UpdateUserResponse, UserStatus, ApiErrorCode } from '../../types';
+import {responseUserData} from "../../lib/utils/response-user-data";
 
 export const createUser = async (body: CreateUserRequest): Promise<CreateUserResponse> => {
   let user = new User();
@@ -51,9 +52,9 @@ export const updateUser = async (
   firstname: string,
   lastname: string,
   email: string,
+  updatedAt: Date,
+  createdAt: Date
 ): Promise<UpdateUserResponse> => {
-  await User.update({ id }, { firstname, lastname, email, updatedAt: new Date() });
-
   const user = await findUserById(id);
 
   if (!user) {
@@ -66,5 +67,12 @@ export const updateUser = async (
     );
   }
 
-  return user;
+  user.firstname = firstname;
+  user.lastname = lastname;
+  user.email = email;
+  user.updatedAt= new Date();
+
+  await user.save();
+
+  return responseUserData(user)
 };

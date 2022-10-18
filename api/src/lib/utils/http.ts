@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { AnySchema } from 'joi';
 import { HTTPCode, ApiErrorCode } from '../../types';
-import Config from '../../lib/utils/config';
+import Config from './config';
 import { APIError } from './api-error';
 
 export function respondSuccess(res: Response, data: unknown, code = HTTPCode.OK) {
