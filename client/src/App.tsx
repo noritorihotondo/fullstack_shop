@@ -1,12 +1,14 @@
 import React from 'react';
-import './App.css';
+import {paths} from "./config";
+import {useRoutes} from "react-router-dom";
 
-function App() {
+export const App = () => {
+  const element = useRoutes(paths);
+
   return (
-    <div className="App">
-
-    </div>
+    <>
+      {element}
+    </>
   );
 }
 
-export default App;
