@@ -26,6 +26,19 @@ services:
     depends_on:
       - mysql_server
 
+  client:
+    build:
+      context: ./client
+    volumes:
+      - ./client:/client
+    ports:
+      - '3000:3000'
+    image: app:react
+    container_name: react_container
+    command: npm start
+    networks:
+      - mynet
+
 networks:
   mynet:
     driver: bridge

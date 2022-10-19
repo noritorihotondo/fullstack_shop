@@ -1,9 +1,10 @@
 import React from 'react';
+import {MainWrapper} from "../components";
 
-const Home = () => {
+export const Home = () => {
     return (
-        <div>
-            <h1>elo</h1>
-        </div>
+        <MainWrapper>
+            <h1>Home</h1>
+        </MainWrapper>
     )
 }
