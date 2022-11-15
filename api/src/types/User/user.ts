@@ -1,7 +1,6 @@
 export interface UserEntity {
   id: string;
-  firstname: string;
-  lastname: string;
+  username: string;
   email: string;
   createdAt: Date;
   updatedAt: Date;
@@ -9,24 +8,21 @@ export interface UserEntity {
 
 export interface CreateUserResponse {
   id: string;
-  firstname: string;
-  lastname: string;
+  username: string;
   email: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface CreateUserRequest {
-  firstname: string;
-  lastname: string;
+  username: string;
   email: string;
   password: string;
 }
 
 export interface UpdateUserRequest {
   id?: string;
-  firstname?: string;
-  lastname?: string;
+  username?: string;
   email?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -34,8 +30,7 @@ export interface UpdateUserRequest {
 
 export interface UpdateUserResponse {
   id: string;
-  firstname?: string;
-  lastname?: string;
+  username?: string;
   email?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -47,3 +42,18 @@ export enum UserStatus {
   Blocked = 'blocked',
   Deleted = 'deleted',
 }
+
+export enum AccessLevel {
+  USER,
+  MODERATOR,
+  ADMIN,
+}
+
+export type Token = {
+  _id: string;
+};
+
+export type TokenClaims = {
+  id: string;
+  accessLevel: AccessLevel;
+};

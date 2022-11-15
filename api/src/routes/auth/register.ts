@@ -6,10 +6,10 @@ import { CreateUserResponse, HTTPMethod, ApiErrorCode, APIRoute } from '../../ty
 
 export default {
   method: HTTPMethod.POST,
-  url: '/users',
+  url: '/auth/register',
   schema: CreateUserSchema,
-  controller: async (req, res, next): Promise<CreateUserResponse> => {
-    const { firstname, lastname, email, password } = req.body;
+  controller: async (req): Promise<CreateUserResponse> => {
+    const { username, email, password } = req.body;
 
     const isTaken = await findUserByEmail(email);
 
@@ -23,6 +23,6 @@ export default {
       );
     }
 
-    return await createUser({ firstname, lastname, email, password });
+    return await createUser({ username, email, password });
   },
 } as APIRoute;

@@ -3,10 +3,12 @@ import { APIError } from '../../lib/utils/api-error';
 import { ApiErrorCode, APIRoute, HTTPMethod } from '../../types';
 import { markAsDeleted } from '../../services';
 import { isUuid } from '../../lib/utils/isUuid';
+import * as Auth from '../../middlewares/auth/auth';
 
 export default {
   method: HTTPMethod.DELETE,
   url: '/user/:id',
+  middleware: [Auth.protectLogInUsers],
   controller: async (req, res, next) => {
     const { id } = req.params;
 

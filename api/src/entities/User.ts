@@ -6,8 +6,11 @@ import {
   UpdateDateColumn,
   BaseEntity,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
-import { UserEntity, UserStatus } from '../types';
+import { IsNotEmpty } from 'class-validator';
+
+import { UserEntity, UserStatus, AccessLevel } from '../types';
 
 @Entity()
 export class User extends BaseEntity implements UserEntity {
@@ -15,7 +18,7 @@ export class User extends BaseEntity implements UserEntity {
   id: string;
 
   @Column({ length: 10 })
-  firstname: string;
+  username: string;
 
   @Column({
     unique: true,
@@ -29,8 +32,8 @@ export class User extends BaseEntity implements UserEntity {
   })
   password: string;
 
-  @Column({ length: 10 })
-  lastname: string;
+  @Column({ default: true })
+  role: AccessLevel;
 
   @Column({
     default: UserStatus.Pending,
@@ -44,4 +47,12 @@ export class User extends BaseEntity implements UserEntity {
 
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
+
+  hashPassword() {
+    this.password = bcrypt.hashSync(this.password, 8);
+  }
+
+  checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+    return bcrypt.compareSync(unencryptedPassword, this.password);
+  }
 }
