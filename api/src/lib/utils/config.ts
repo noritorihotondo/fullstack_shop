@@ -1,3 +1,5 @@
+import { getNamespace } from 'cls-hooked';
+
 function getConfigString(prop: string): string {
   const val = process.env[prop] || null;
 
@@ -43,4 +45,14 @@ export default class Config {
   public static DB_USER = getConfig('DB_USER', 'string');
   public static DB_PASSWORD = getConfig('DB_PASSWORD', 'string');
   public static DB_DATABASE = getConfig('DB_DATABASE', 'string');
+
+  public static AUTH_COOKIE_DOMAIN = getConfig('AUTH_COOKIE_DOMAIN', 'string') as string;
+  public static SESSION_NAMESPACE = getConfig('SESSION_NAMESPACE', 'string') as string;
+
+  public static TOKEN_ACCESS_SECRET = getConfig('TOKEN_ACCESS_SECRET', 'string') as string;
+  public static TOKEN_REFRESH_SECRET = getConfig('TOKEN_REFRESH_SECRET', 'string') as string;
+
+  public static fromSession(name: string) {
+    return getNamespace(Config.SESSION_NAMESPACE)?.get(name);
+  }
 }
