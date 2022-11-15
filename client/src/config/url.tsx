@@ -1,10 +1,12 @@
 import { Navigate } from 'react-router-dom';
 import { RouteObject } from 'react-router-dom';
-import { Home, LoginPage } from '../views';
+import { Home, LoginPage, RegisterPage } from '../views';
+import { ProtectRoute } from '../components';
 
 export const baseUrl = {
   home: '/home',
   loginPage: '/login',
+  registerPage: '/register',
 };
 
 export const paths: RouteObject[] = [
@@ -14,10 +16,18 @@ export const paths: RouteObject[] = [
   },
   {
     path: baseUrl.home,
-    element: <Home />,
+    element: (
+      <ProtectRoute>
+        <Home />
+      </ProtectRoute>
+    ),
   },
   {
     path: baseUrl.loginPage,
     element: <LoginPage />,
+  },
+  {
+    path: baseUrl.registerPage,
+    element: <RegisterPage />,
   },
 ];

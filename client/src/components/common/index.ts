@@ -5,3 +5,4 @@ export * from './InputWrapper';
 export * from './Label';
 export * from './Typography';
 export * from './FormControl';
+export * from './ProtectRoute';
