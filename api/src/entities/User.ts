@@ -8,8 +8,6 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-import { IsNotEmpty } from 'class-validator';
-
 import { UserEntity, UserStatus, AccessLevel } from '../types';
 
 @Entity()
