@@ -4,4 +4,5 @@ export enum ApiErrorCode {
   BadCredentials,
   UserAlreadyExists,
   CantFindProduct,
+  CantFindFile,
 }

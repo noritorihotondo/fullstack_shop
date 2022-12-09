@@ -9,7 +9,7 @@ export async function protectLogInUsers(req: Request, res: Response, next: NextF
       return res.status(401).send({ message: 'You need to sign in' });
     }
     const token = bearer.split('Bearer ')[1].trim();
-    console.log(token);
+
     if (!token) return res.sendStatus(401);
     const userFromToken = await JwtService.verifyToken(token);
     if (!userFromToken) return res.sendStatus(403);

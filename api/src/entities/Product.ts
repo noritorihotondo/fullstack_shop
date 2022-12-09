@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 import { ProductEntity } from '../types';
+import { File } from './Files';
 
 @Entity()
 export class Product extends BaseEntity implements ProductEntity {
@@ -18,13 +21,19 @@ export class Product extends BaseEntity implements ProductEntity {
   productname: string;
 
   @Column({
-    nullable: true,
+    default: 0,
   })
   price: number;
+
+  @Column({ default: 0 })
+  rate: number;
 
   @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
+
+  @OneToMany(() => File, (file) => file.product)
+  files: File[];
 }

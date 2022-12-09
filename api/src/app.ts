@@ -1,5 +1,5 @@
 import express from 'express';
-import cookieSession from 'cookie-session';
+import path from 'path';
 import cookieParser from 'cookie-parser';
 import { createNamespace } from 'cls-hooked';
 import preMiddlewares from './middlewares/pre';
@@ -15,6 +15,7 @@ createNamespace(Config.SESSION_NAMESPACE);
 const app = express();
 
 app.use(cookieParser());
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 for (const middleware of preMiddlewares) {
   app.use(...middleware);
