@@ -7,8 +7,8 @@ import { isUuid } from '../../lib/utils/isUuid';
 export default {
   method: HTTPMethod.PUT,
   url: '/product/:id',
-  controller: async (req): Promise<UpdateProductResponse> => {
-    const { productname, price } = req.body;
+  controller: async (req, res, next): Promise<UpdateProductResponse> => {
+    const { productname, price, rate, updatedAt } = req.body;
     const { id } = req.params;
 
     if (!isUuid(id)) {
@@ -22,6 +22,7 @@ export default {
     }
 
     const product = await getProductById(id);
+    console.log(product);
 
     if (!product) {
       throw new APIError(
@@ -32,7 +33,8 @@ export default {
         'UpdateProduct',
       );
     }
-    const updatedProduct = await updateProduct(product);
+
+    const updatedProduct = await updateProduct(id, productname, price, rate, updatedAt);
     return updatedProduct;
   },
 } as APIRoute;

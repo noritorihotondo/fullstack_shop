@@ -45,6 +45,7 @@ export default class Config {
   public static DB_USER = getConfig('DB_USER', 'string');
   public static DB_PASSWORD = getConfig('DB_PASSWORD', 'string');
   public static DB_DATABASE = getConfig('DB_DATABASE', 'string');
+  public static BACKEND_DOMAIN = getConfig('BACKEND_DOMAIN', 'string');
 
   public static AUTH_COOKIE_DOMAIN = getConfig('AUTH_COOKIE_DOMAIN', 'string') as string;
   public static SESSION_NAMESPACE = getConfig('SESSION_NAMESPACE', 'string') as string;

@@ -1,14 +1,15 @@
 import { StatusCodes } from 'http-status-codes';
-import * as fs from 'fs';
 import { APIRoute, HTTPMethod, ApiErrorCode } from '../../types';
 import { APIError } from '../../lib/utils/api-error';
-import { getProductById } from '../../services/ProductService/Product';
+import { getWholeProduct } from '../../services/ProductService/Product';
 import { isUuid } from '../../lib/utils/isUuid';
 import { protectLogInUsers } from '../../middlewares/auth/auth';
 
+import Config from '../../lib/utils/config';
+
 export default {
   method: HTTPMethod.GET,
-  url: '/product/:id',
+  url: '/product/whole/:id',
   middleware: [protectLogInUsers],
   controller: async (req) => {
     const { id } = req.params;
@@ -23,7 +24,7 @@ export default {
       );
     }
 
-    const product = await getProductById(id);
+    const product = await getWholeProduct(id);
 
     if (!product) {
       throw new APIError(

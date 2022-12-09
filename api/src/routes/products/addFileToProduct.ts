@@ -1,16 +1,16 @@
 import { StatusCodes } from 'http-status-codes';
 import { APIError } from '../../lib/utils/api-error';
-import { createProduct } from '../../services/ProductService/Product';
-import { HTTPMethod, ApiErrorCode, APIRoute, CreateProductResponse } from '../../types';
+import { addFileToProduct } from '../../services';
+import { HTTPMethod, ApiErrorCode, APIRoute, AddImageToProductResponse } from '../../types';
 import { protectLogInUsers } from '../../middlewares/auth/auth';
 import { upload } from '../../middlewares/upload';
 
 export default {
-  method: HTTPMethod.POST,
-  url: '/products',
+  method: HTTPMethod.PUT,
+  url: '/products/:id',
   middleware: [protectLogInUsers, upload.single('src/images')],
-  controller: async (req): Promise<CreateProductResponse> => {
-    const { productname, price, rate } = req.body;
+  controller: async (req): Promise<AddImageToProductResponse> => {
+    const { id } = req.params;
     const file = req.file;
 
     if (!file) {
@@ -23,6 +23,6 @@ export default {
       );
     }
 
-    return await createProduct({ productname, price, rate, file });
+    return await addFileToProduct({ id, file });
   },
 } as APIRoute;
