@@ -8,7 +8,7 @@ const PORT = Config.PORT || 8080;
 const main = async () => {
   try {
     await AppDataSource.initialize();
-    await app.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}`);
     });
   } catch (error) {

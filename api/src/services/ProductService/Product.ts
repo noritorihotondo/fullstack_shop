@@ -1,3 +1,4 @@
+import { AppDataSource } from './../../database/typeorm';
 import path from 'path';
 import { StatusCodes } from 'http-status-codes';
 import { APIError } from './../../lib/utils/api-error';
@@ -12,7 +13,7 @@ import {
   AddMultipleFilesToProductRequest,
 } from '../../types';
 
-import Config from '../../lib/utils/config';
+import { GenericPaginationFunctionType } from '../../lib/utils/pagination';
 
 import { Product } from './../../entities/Product';
 import { File } from '../../entities/Files';
@@ -127,8 +128,26 @@ export const addFileToProduct = async (
   return product;
 };
 
-export const getAllProducts = async () => {
-  const product = await Product.find();
+// export const getAllProducts = async (page: number, pageSize: number) => {
+//   const product = await Product.find({
+//     select: {
+//       id: true,
+//       productname: true,
+//     },
+//     skip: (Number(page) - 1) * Number(pageSize),
+//     take: Number(pageSize),
+//   });
+
+//   return product;
+// };
+
+export const getAllProducts: GenericPaginationFunctionType<Product> = async (entity, options) => {
+  const { page, pageSize } = options;
+
+  const product = await AppDataSource.createQueryBuilder(entity, 'entity')
+    .take(pageSize)
+    .skip((page - 1) * pageSize)
+    .getMany();
 
   return product;
 };
@@ -140,8 +159,6 @@ export const getProductById = async (id: string) => {
 };
 
 export const getWholeProduct = async (id: string) => {
-  const localPath = Config.BACKEND_DOMAIN + '/images/1670328380985.jpg';
-
   const product = await Product.findOne({ where: { id }, relations: ['file'] });
 
   return product;
