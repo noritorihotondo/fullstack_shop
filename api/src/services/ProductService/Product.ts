@@ -1,5 +1,6 @@
-import { AppDataSource } from './../../database/typeorm';
 import path from 'path';
+import { Like } from 'typeorm';
+import { AppDataSource } from './../../database/typeorm';
 import { StatusCodes } from 'http-status-codes';
 import { APIError } from './../../lib/utils/api-error';
 import {
@@ -13,7 +14,10 @@ import {
   AddMultipleFilesToProductRequest,
 } from '../../types';
 
-import { GenericPaginationFunctionType } from '../../lib/utils/pagination';
+import {
+  GenericPaginationFunctionType,
+  GenericPaginationWithFiltersFuctionType,
+} from '../../lib/utils/pagination';
 
 import { Product } from './../../entities/Product';
 import { File } from '../../entities/Files';
@@ -128,19 +132,6 @@ export const addFileToProduct = async (
   return product;
 };
 
-// export const getAllProducts = async (page: number, pageSize: number) => {
-//   const product = await Product.find({
-//     select: {
-//       id: true,
-//       productname: true,
-//     },
-//     skip: (Number(page) - 1) * Number(pageSize),
-//     take: Number(pageSize),
-//   });
-
-//   return product;
-// };
-
 export const getAllProducts: GenericPaginationFunctionType<Product> = async (entity, options) => {
   const { page, pageSize } = options;
 
@@ -152,14 +143,31 @@ export const getAllProducts: GenericPaginationFunctionType<Product> = async (ent
   return product;
 };
 
-export const getProductById = async (id: string) => {
-  const product = await Product.findOne({ where: { id }, relations: ['files'] });
+export const getAllProductsWithFilters: GenericPaginationWithFiltersFuctionType<Product> = async (
+  entity,
+  options,
+) => {
+  const { page, pageSize, search } = options;
+  const { productname, price, rate } = search;
+
+  const product = await AppDataSource.createQueryBuilder(entity, 'entity')
+    .where(
+      [
+        { productname: Like(`%${productname}%`) },
+        { price: Like(`%${price}%`) },
+        { rate: Like(`%${rate}%`) },
+      ],
+      { price: Like(`%${price}%`) },
+    )
+    .take(pageSize)
+    .skip((page - 1) * pageSize)
+    .getMany();
 
   return product;
 };
 
-export const getWholeProduct = async (id: string) => {
-  const product = await Product.findOne({ where: { id }, relations: ['file'] });
+export const getProductById = async (id: string) => {
+  const product = await Product.findOne({ where: { id }, relations: ['files'] });
 
   return product;
 };

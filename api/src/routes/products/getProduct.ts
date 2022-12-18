@@ -1,11 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import { APIRoute, HTTPMethod, ApiErrorCode } from '../../types';
 import { APIError } from '../../lib/utils/api-error';
-import { getWholeProduct } from '../../services/ProductService/Product';
+import { getProductById } from '../../services/ProductService/Product';
 import { isUuid } from '../../lib/utils/isUuid';
 import { protectLogInUsers } from '../../middlewares/auth/auth';
-
-import Config from '../../lib/utils/config';
 
 export default {
   method: HTTPMethod.GET,
@@ -24,7 +22,7 @@ export default {
       );
     }
 
-    const product = await getWholeProduct(id);
+    const product = await getProductById(id);
 
     if (!product) {
       throw new APIError(
