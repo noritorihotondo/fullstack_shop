@@ -5,12 +5,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ManyToOne,
   OneToMany,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 
 import { ProductEntity } from '../types';
 import { File } from './Files';
+import { Orders } from './Orders';
 
 @Entity()
 export class Product extends BaseEntity implements ProductEntity {
@@ -36,4 +38,7 @@ export class Product extends BaseEntity implements ProductEntity {
 
   @OneToMany(() => File, (file) => file.product)
   files: File[];
+
+  @ManyToMany(() => Orders, (order) => order.products)
+  orders: Orders;
 }

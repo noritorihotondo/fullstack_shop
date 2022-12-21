@@ -1,4 +1,3 @@
-import { File } from '../../entities/Files';
 export interface ProductEntity {
   id: string;
   productname: string;

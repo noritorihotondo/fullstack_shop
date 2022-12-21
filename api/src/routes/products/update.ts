@@ -7,7 +7,7 @@ import { isUuid } from '../../lib/utils/isUuid';
 export default {
   method: HTTPMethod.PUT,
   url: '/product/:id',
-  controller: async (req, res, next): Promise<UpdateProductResponse> => {
+  controller: async (req): Promise<UpdateProductResponse> => {
     const { productname, price, rate, updatedAt } = req.body;
     const { id } = req.params;
 

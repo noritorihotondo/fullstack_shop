@@ -50,7 +50,6 @@ export const createProduct = async (body: CreateProductRequest): Promise<CreateP
       'CreateProduct',
     );
   }
-  console.log(filename);
 
   return product;
 };

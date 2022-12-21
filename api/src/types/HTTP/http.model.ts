@@ -5,4 +5,5 @@ export enum ApiErrorCode {
   UserAlreadyExists,
   CantFindProduct,
   CantFindFile,
+  CantFindOrder,
 }
