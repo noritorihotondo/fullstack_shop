@@ -10,7 +10,7 @@ export default {
   url: '/products',
   middleware: [protectLogInUsers, upload.single('src/images')],
   controller: async (req): Promise<CreateProductResponse> => {
-    const { productname, price, rate } = req.body;
+    const { productname, price, rate, quantity } = req.body;
     const file = req.file;
 
     if (!file) {
@@ -23,6 +23,6 @@ export default {
       );
     }
 
-    return await createProduct({ productname, price, rate, file });
+    return await createProduct({ productname, price, rate, file, quantity });
   },
 } as APIRoute;

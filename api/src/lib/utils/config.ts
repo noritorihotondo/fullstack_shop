@@ -53,6 +53,10 @@ export default class Config {
   public static TOKEN_ACCESS_SECRET = getConfig('TOKEN_ACCESS_SECRET', 'string') as string;
   public static TOKEN_REFRESH_SECRET = getConfig('TOKEN_REFRESH_SECRET', 'string') as string;
 
+  public static EMAIL_USER = getConfig('EMAIL_USER', 'string');
+  public static EMAIL_PASSWORD = getConfig('EMAIL_PASS', 'string');
+  public static EMAIL_HOST = getConfig('EMAIL_HOST', 'string');
+
   public static fromSession(name: string) {
     return getNamespace(Config.SESSION_NAMESPACE)?.get(name);
   }

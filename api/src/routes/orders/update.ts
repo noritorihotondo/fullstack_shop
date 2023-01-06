@@ -7,9 +7,8 @@ export default {
   method: HTTPMethod.PUT,
   url: '/orders/id/:id',
   controller: async (req): Promise<UpdateOrderResponse> => {
-    const { quantity } = req.body;
     const { id } = req.params;
 
-    return await updateOrder({ id, quantity });
+    return await updateOrder({ id });
   },
 } as APIRoute;

@@ -1,20 +1,15 @@
 export interface OrdersEntity {
   id: string;
-  quantity: number;
 }
 
 export interface CreateOrderRequest {
   id: string;
-  quantity: number;
 }
 export interface CreateOrderResponse {
-  quantity: number;
+  id: string;
 }
 
 export interface UpdateOrderRequest {
   id: string;
-  quantity: number;
 }
-export interface UpdateOrderResponse {
-  quantity?: number;
-}
+export interface UpdateOrderResponse {}

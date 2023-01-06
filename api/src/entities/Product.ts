@@ -27,6 +27,11 @@ export class Product extends BaseEntity implements ProductEntity {
   })
   price: number;
 
+  @Column({
+    default: 0,
+  })
+  quantity: number;
+
   @Column({ default: 0 })
   rate: number;
 

@@ -8,7 +8,7 @@ export default {
   method: HTTPMethod.PUT,
   url: '/product/:id',
   controller: async (req): Promise<UpdateProductResponse> => {
-    const { productname, price, rate, updatedAt } = req.body;
+    const { productname, price, rate, updatedAt, quantity } = req.body;
     const { id } = req.params;
 
     if (!isUuid(id)) {
@@ -22,7 +22,6 @@ export default {
     }
 
     const product = await getProductById(id);
-    console.log(product);
 
     if (!product) {
       throw new APIError(
@@ -34,7 +33,7 @@ export default {
       );
     }
 
-    const updatedProduct = await updateProduct(id, productname, price, rate, updatedAt);
+    const updatedProduct = await updateProduct(id, productname, price, rate, updatedAt, quantity);
     return updatedProduct;
   },
 } as APIRoute;

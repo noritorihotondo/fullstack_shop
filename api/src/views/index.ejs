@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #cccccc;
+      }
+      table {
+        border-spacing: 0;
+      }
+      td {
+        padding: 0;
+      }
+      img {
+        border: 0;
+      }
+      .wrapper {
+        width: 100%;
+        table-layout: fixed;
+        background-color: #cccccc;
+        padding-bottom: 60px;
+      }
+      .main {
+        background-color: #cccccc;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 600px;
+        border-spacing: 0;
+        font-family: sans-serif;
+        color: #171a1b;
+      }
+      .header-section {
+        position: relative;
+        width: 100%;
+        height: 200px;
+        background-color: #fff;
+        text-align: center;
+      }
+      .header-columns {
+        background-color: #fff;
+      }
+      .body-order {
+        background-color: #cccccc;
+        width: 100%;
+        text-align: center;
+      }
+      .footer {
+        background-color: #171a1b;
+        width: 100%;
+        height: 100px;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0px 10px 0;
+      }
+      .emphasis {
+        color: aqua;
+      }
+      .body-details {
+        width: 100%;
+      }
+      .body-details > tbody > tr > td {
+        width: 50%;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <center calss="wrapper">
+      <table calss="main" width="100%">
+        <!------TOP BORDER--->
+        <tr>
+          <td height="8px" style="background-color: #171a1b"></td>
+        </tr>
+        <!------LOGO SECTION--->
+        <tr>
+          <td>
+            <table width="100%">
+              <tr>
+                <td class="header-columns">
+                  <table class="column">
+                    <div class="header-section">
+                      <h1>SHOPBOB</h1>
+                      <h2>WE'VE RECEIVED YOUR ORDER!</h2>
+                      <p>Thanks for shopping with SHOPBOB!</p>
+
+                      <p>
+                        Please allow up to 2 business days(excluding weekends, holidays, and sale
+                        days) to process and ship you order. You will receive another email when
+                        your order has shipped
+                      </p>
+                    </div>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <!------body--->
+        <tr>
+          <td>
+            <table width="100%">
+              <tbody>
+                <td>
+                  <div class="body-order">
+                    <h3>Order's details</h3>
+                  </div>
+                  <table class="body-details">
+                    <tr>
+                      <td>name: <%= JSON.stringify(data.products[0].productname)%></td>
+                      <td>price: <%= JSON.stringify(data.products[0].price)%></td>
+                    </tr>
+                  </table>
+                </td>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <!------footer--->
+        <tr>
+          <td>
+            <table width="100%">
+              <td>
+                <div class="footer">
+                  <p>
+                    You may cancel an order within one hour afrer placing it by<br />
+                    visiting you order details page.After that hour has passed it is not possbile<br />
+                    to cancel. Please note that SHOPBOB does not offer retrun or refund for orders.
+                    If you hava any questions<br />
+                    <span class="emphasis">please contact our customer support team.</span>
+                  </p>
+                </div>
+              </td>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>

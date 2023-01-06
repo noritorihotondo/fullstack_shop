@@ -7,9 +7,9 @@ export default {
   method: HTTPMethod.POST,
   url: '/orders/:productId',
   controller: async (req): Promise<CreateOrderResponse> => {
-    const { id, quantity } = req.body;
+    const { id, email } = req.body;
     const { productId } = req.params;
 
-    return await createOrder({ id, quantity }, productId);
+    return await createOrder({ id }, productId, email);
   },
 } as APIRoute;

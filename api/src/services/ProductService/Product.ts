@@ -30,6 +30,7 @@ export const createProduct = async (body: CreateProductRequest): Promise<CreateP
 
   product.productname = body.productname;
   product.price = body.price;
+  product.quantity = body.quantity;
 
   await product.save();
 
@@ -182,6 +183,7 @@ export const updateProduct = async (
   id: string,
   productname: string,
   price: number,
+  quantity: number,
   updatedAt: Date,
   createdAt: Date,
 ): Promise<UpdateProductResponse> => {
@@ -199,6 +201,7 @@ export const updateProduct = async (
 
   product.productname = productname;
   product.price = price;
+  product.quantity = quantity;
   product.updatedAt = new Date();
 
   await product.save();
